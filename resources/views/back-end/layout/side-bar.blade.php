@@ -41,6 +41,12 @@
                 <p>Tags</p>
             </a>
         </li>
+        <li class="nav-item ">
+            <a  class="nav-link"  href="{{ route('pages.index') }}">
+                <i class="material-icons">offline_bolt</i>
+                <p>Pages</p>
+            </a>
+        </li>
         <!-- your sidebar here -->
     </ul>
     </div>
