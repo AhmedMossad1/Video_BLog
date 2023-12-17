@@ -15,6 +15,10 @@ class BackEndController extends Controller
     }
     public function index(){
         $rows=$this->model;
+        $with = $this->with();
+        if(!empty($with)){
+            $rows=$rows->with($with);
+        }
         $rows = $rows->paginate(10);
         $moduleName = $this->pluralModelName();
         $pageDes = "Here you can add / edit / delete " .$moduleName;
@@ -38,12 +42,13 @@ class BackEndController extends Controller
         $pageDes = "Here you can Add " .$moduleName;
         $folderName= $this->getClassNameFromModel();
         $routeName = $folderName;
+        $append=$this->append();
         return view('back-end.'.$folderName.'.create',compact(
             'routeName',
             'pageTitle',
             'pageDes',
             'moduleName',
-            'folderName'));
+            'folderName'))->with($append);
     }
     public function edit($id){
         $row=$this->model->findOrFail($id);
@@ -52,18 +57,22 @@ class BackEndController extends Controller
         $pageDes = "Here you can edit " .$moduleName;
         $folderName = $this->getClassNameFromModel();
         $routeName = $folderName;
+        $append=$this->append();
         return  view('back-end.' . $folderName . '.edit', compact(
             'row',
             'pageTitle',
             'moduleName',
             'pageDes',
             'folderName',
-            'routeName'));
+            'routeName'))->with($append);
 
     }
     public function destroy($id){
         $this->model->findOrfail($id)->delete();
         return redirect()->route($this->getClassNameFromModel().'.index');
+    }
+    protected function with(){
+        return[];
     }
 
     protected function getClassNameFromModel(){
@@ -74,5 +83,8 @@ class BackEndController extends Controller
     }
     protected function getModelName(){
         return class_basename($this->model);
+    }
+    protected function append(){
+        return[];
     }
 }

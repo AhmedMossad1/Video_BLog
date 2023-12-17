@@ -27,6 +27,7 @@ Route::namespace('App\Http\Controllers\BackEnd')->prefix('admin')->group(functio
     Route::resource('skills', 'Skills')->except(['show']);
     Route::resource('tags', 'Tags')->except(['show']);
     Route::resource('pages', 'Pages')->except(['show']);
+    Route::resource('videos', 'Videos')->except(['show']);
 });
 
 
