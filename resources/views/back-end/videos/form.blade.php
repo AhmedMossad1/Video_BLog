@@ -108,13 +108,14 @@
         </div>
     </div>
 
-    {{-- @php $input = "skills[]"; @endphp
+    @php $input = "skills[]"; @endphp
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
             <label class="bmd-label-floating">Skills</label>
             <select name="{{$input}}" class="form-control @error($input) is-invalid @enderror" multiple style="height: 100px">
                 @foreach($skills  as $skill)
                 <option value="{{ $skill->id }}" {{ in_array( $skill->id, $selectedSkills) ? 'selected' : '' }} >{{ $skill->name }}</option>
+                {{-- <option value="{{ $skill->id }}"  >{{ $skill->name }}</option> --}}
                 @endforeach
             </select>
             @error($input)
@@ -123,9 +124,9 @@
             </span>
             @enderror
         </div>
-    </div> --}}
+    </div>
 
-    {{-- @php $input = "tags[]"; @endphp
+    @php $input = "tags[]"; @endphp
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
             <label class="bmd-label-floating">Tags</label>
@@ -140,7 +141,7 @@
             </span>
             @enderror
         </div>
-    </div> --}}
+    </div>
 
 
 </div>

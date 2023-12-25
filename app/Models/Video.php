@@ -25,4 +25,13 @@ class Video extends Model
     public function cat(){
         return $this->belongsTo(Category::class,'cat_id');
     }
+    public function skills(){
+        return $this->belongsToMany(Skill::class , 'skills_videos');
+    }
+    public function tags(){
+        return $this->belongsToMany(Tag::class , 'tags_videos');
+    }
+    public function comments(){
+        return $this->hasMany(Comments::class);
+    }
 }

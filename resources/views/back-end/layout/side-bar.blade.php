@@ -37,16 +37,22 @@
         </li>
         <li class="nav-item ">
             <a  class="nav-link"  href="{{ route('tags.index') }}">
-                <i class="material-icons">offline_bolt</i>
+                <i class="material-icons">turned_in_not</i>
                 <p>Tags</p>
             </a>
-        </li>
-        <li class="nav-item ">
+            </li>
+            <li class="nav-item ">
             <a  class="nav-link"  href="{{ route('pages.index') }}">
-                <i class="material-icons">offline_bolt</i>
+                <i class="material-icons">content_paste</i>
                 <p>Pages</p>
             </a>
-        </li>
+            </li>
+            <li class="nav-item ">
+            <a  class="nav-link"  href="{{ route('videos.index') }}">
+                <i class="material-icons">video_call</i>
+                <p>Videos</p>
+            </a>
+            </li>
         <!-- your sidebar here -->
     </ul>
     </div>
