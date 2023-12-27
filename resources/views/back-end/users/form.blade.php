@@ -38,7 +38,7 @@
             @enderror
         </div>
     </div>
-    {{-- @php $input = "group"; @endphp
+    @php $input = "group"; @endphp
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
             <label class="bmd-label-floating">User Group</label>
@@ -52,5 +52,5 @@
             </span>
             @enderror
         </div>
-    </div> --}}
+    </div>
 </div>

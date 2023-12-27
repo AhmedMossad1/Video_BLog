@@ -12,6 +12,7 @@ class Store extends FormRequest
             'name' => 'required|string|max:191',
             'email' => 'required|string|email|max:191',
             'password' => 'required|min:8',
+            'group' => 'required'
 
         ];
     }

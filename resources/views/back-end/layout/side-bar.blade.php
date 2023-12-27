@@ -53,6 +53,12 @@
                 <p>Videos</p>
             </a>
             </li>
+            <li class="nav-item ">
+                <a  class="nav-link"  href="{{ route('messages.index') }}">
+                    <i class="material-icons">cloud</i>
+                    <p>Messages</p>
+                </a>
+                </li>
         <!-- your sidebar here -->
     </ul>
     </div>
