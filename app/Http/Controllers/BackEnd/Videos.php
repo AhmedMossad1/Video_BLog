@@ -6,7 +6,10 @@ use App\Http\Requests\BackEnd\Videos\Store;
 use App\Http\Requests\BackEnd\Videos\Update;
 use App\Models\Skill;
 use App\Models\Tag;
+use App\Models\User;
 use App\Models\Video;
+use App\Notifications\AddVideo;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 
 class Videos extends BackEndController
@@ -38,16 +41,17 @@ class Videos extends BackEndController
         }
         return $array;
     }
-
-
     public function store(Store $request){
         $fileName = $this->uploadImage($request);
         $requestarray =$request->all();
         $requestarray =  ['user_id' => auth()->user()->id , 'image' => $fileName] + $requestarray;
-        $row = $this->model::create($requestarray);
+        $row= $this->model::create($requestarray);
         $this->syncTagsSkills($row , $requestarray);
+        $users = User::where('id','!=',auth()->user()->id)->get();
+        $user_create = auth()->user()->name;
+        Notification::send($users,new AddVideo($row->id,$user_create,$row->name));
         return redirect()->route('videos.index');
-}
+    }
     public function update($id,Update $request){
         $requestarray = $request->all();
         if($request->hasFile('image')){
@@ -57,7 +61,7 @@ class Videos extends BackEndController
         $row= $this->model->findOrFail($id);
         $this->syncTagsSkills($row , $requestarray);
         return redirect()->route('videos.index');
-}
+    }
     protected function syncTagsSkills($row , $requestarray){
         if (isset($requestarray['skills']) && !empty($requestarray['skills'])) {
             $row->skills()->sync($requestarray['skills']);
@@ -73,5 +77,8 @@ class Videos extends BackEndController
         $file->move(public_path('uploads') , $fileName);
         return $fileName;
     }
+
+
+
 
 }

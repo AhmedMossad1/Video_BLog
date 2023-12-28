@@ -12,8 +12,10 @@ use App\Models\Skill;
 use App\Models\Tag;
 use App\Models\User;
 use App\Models\Video;
+use App\Http\Requests\FrontEnd\Videos\Store as VideosStore;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\FrontEnd\Users\Store as UsersStore;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -38,6 +40,8 @@ class HomeController extends Controller
     }
     public function video($id){
         $video = Video::published()->with('skills' , 'tags' , 'cat' , 'user','comments.user' )->findOrFail($id);
+        $getID = DB::table('notifications')->where('data->video_id',$id)->pluck('id');
+        DB::table('notifications')->where('id',$getID)->update(['read_at'=>now()]);
         return view('front-end.video.index' , compact('video'));
     }
     public function skills($id){
@@ -84,7 +88,6 @@ class HomeController extends Controller
         $page = Page::findOrFail($id);
         return view('front-end.page.index' , compact('page'));
     }
-
     public function profile($id , $slug = null){
         $user = User::findOrFail($id);
         return view('front-end.profile.index' , compact('user'));
@@ -111,6 +114,16 @@ class HomeController extends Controller
         return redirect()->route('front.profile' , ['id' => $user->id , 'slug' =>slug($user->name)]);
         // return view('front-end.profile.index' , compact('user'));
     }
+    // Mark all Notifications as Read
+    public function markAsRead(){
+        $user = User::find(auth()->user()->id);
+        foreach($user->unreadNotifications as $notification){
+        $notification->markAsRead();
+    }
+        return redirect()->back();
+
+    }
+
 
 
 

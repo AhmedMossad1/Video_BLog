@@ -34,6 +34,47 @@
                     @endforeach
                 </div>
             </li>
+
+
+            <li class="nav-item dropdown" >
+                <a class="nav-link text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-bell"></i>
+                </a>
+                <ul class="dropdown-menu" style="width: 400px;">
+                <li class="head text-light bg-dark">
+                <div class="row">
+                <div class="col-lg-12 col-sm-12 col-12">
+                <span>Notifications ({{Auth::User()->unreadNotifications->count()}})</span>
+                <a href="{{route('Notification.Read')}}" class="float-right text-light">Mark all as read</a>
+                </div>
+                </li>
+                @foreach (Auth::User()->unreadNotifications as $notification)
+
+
+                <li class="notification-box" style="padding: 10px 0px">
+                <div class="row">
+                <div class="col-lg-3 col-sm-3 col-3 text-center">
+
+                </div>
+                <div class="col-lg-8 col-sm-8 col-8">
+                <strong class="text-info">{{$notification->data['user_create']}}</strong>
+                <div>
+                    <a href="{{ route('front.video' ,$notification->data['video_id']) }}">
+                    {{$notification->data['video_name']}}
+                    </a>
+                </div>
+                <small class="text-warning">{{$notification->created_at}}</small>
+                </div>
+                </div>
+                </li>
+                @endforeach
+
+                <li class="footer bg-dark text-center">
+                <a href="" class="text-light">View All</a>
+                </li>
+                </ul>
+                </li>
+
             @guest
                 <li class="nav-item">
                     <a href="{{ url('/login') }}" class="nav-link">login</a>

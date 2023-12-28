@@ -48,6 +48,7 @@ Route::get('skill/{id}', 'App\Http\Controllers\HomeController@skills')->name('fr
 Route::get('tag/{id}', 'App\Http\Controllers\HomeController@tags')->name('front.tags');
 Route::get('video/{id}', 'App\Http\Controllers\HomeController@video')->name('front.video');
 Route::get('contact-us', 'App\Http\Controllers\HomeController@messageStore')->name('contact.store');
+Route::get('Notification/Read', 'App\Http\Controllers\HomeController@markAsRead')->name('Notification.Read');
 
 Route::get('profile/{id}/{slug?}', 'App\Http\Controllers\HomeController@profile')->name('front.profile');
 Route::middleware('auth')->group(function () {
