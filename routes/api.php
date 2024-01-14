@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\VideoController;
-
+use App\Http\Controllers\Api\UserAuthController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -23,3 +23,8 @@ Route::get('/video/{id}',[VideoController::class,'show']);
 Route::post('/video',[VideoController::class,'store']);
 Route::post('/video/{id}',[VideoController::class,'update']);
 Route::post('/videos/{id}',[VideoController::class,'destory']);
+
+Route::post('register',[UserAuthController::class,'register']);
+Route::post('login',[UserAuthController::class,'login']);
+Route::post('logout',[UserAuthController::class,'logout'])
+->middleware('auth:sanctum');
