@@ -36,13 +36,11 @@ class UserAuthController extends Controller
             return response()->json(['error'=>'Provide proper details']);
         }
     }
-    public function login(Request $request)
-    {
+    public function login(Request $request){
         $request->validate([
             'email' => 'required|string|email',
             'password' => 'required|string',
         ]);
-
         if (!Auth::attempt($request->only('email', 'password'))) {
             return response()->json([
                 'message' => 'Unauthorized'
@@ -58,4 +56,12 @@ class UserAuthController extends Controller
             'token_type' => 'Bearer',
             ]);
     }
+
+    public function logout(Request $request){
+    $request->user()->tokens()->delete();
+    return response()->json([
+    'message' => 'Successfully logged out'
+    ]);
+
+}
 }
