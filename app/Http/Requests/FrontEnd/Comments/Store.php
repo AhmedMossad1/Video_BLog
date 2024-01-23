@@ -10,7 +10,7 @@ class Store extends FormRequest
     public function rules()
     {
         return [
-            'comment' => ['required' ,'min:10' , 'max:2000'],
+            'comment' => ['required' ,'min:2' , 'max:2000'],
         ];
     }
 }

@@ -12,10 +12,11 @@ use App\Models\Skill;
 use App\Models\Tag;
 use App\Models\User;
 use App\Models\Video;
-use App\Http\Requests\FrontEnd\Videos\Store as VideosStore;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\FrontEnd\Users\Store as UsersStore;
 use Illuminate\Support\Facades\DB;
+use App\Notifications\AddComments;
+use Illuminate\Support\Facades\Notification;
 
 class HomeController extends Controller
 {
@@ -41,7 +42,7 @@ class HomeController extends Controller
     public function video($id){
         $video = Video::published()->with('skills' , 'tags' , 'cat' , 'user','comments.user' )->findOrFail($id);
         $getID = DB::table('notifications')->where('data->video_id',$id)->pluck('id');
-        DB::table('notifications')->where('id',$getID)->update(['read_at'=>now()]);
+      //  DB::table('notifications')->where('id',$getID)->update(['read_at'=>now()]);
         return view('front-end.video.index' , compact('video'));
     }
     public function skills($id){
@@ -66,11 +67,14 @@ class HomeController extends Controller
     }
     public function commentStore($id , Store $request){
         $video = Video::published()->findOrFail($id);
-        Comments::create([
+        $row = Comments::create([
             'user_id' => auth()->user()->id,
             'video_id' => $video->id,
             'comment' => $request->comment
         ]);
+        $users = User::where('id','!=',auth()->user()->id)->get();
+        $user_create = auth()->user()->name;
+        Notification::send($users,new AddComments($video->id,$user_create,$video->name,$row->id,$request->comment));
         return view('front-end.video.index' , compact('video'));
     }
     public function messageStore(MessagesStore  $request){
@@ -119,7 +123,7 @@ class HomeController extends Controller
         $user = User::find(auth()->user()->id);
         foreach($user->unreadNotifications as $notification){
         $notification->markAsRead();
-    }
+        }
         return redirect()->back();
 
     }

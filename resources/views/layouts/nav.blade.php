@@ -44,10 +44,11 @@
                 <li class="head text-light bg-dark">
                 <div class="row">
                 <div class="col-lg-12 col-sm-12 col-12">
-                <span>Notifications ({{Auth::User()->unreadNotifications->count()}})</span>
+                <span>Notifications ({{Auth::User()?->unreadNotifications->count()}})</span>
                 <a href="{{route('Notification.Read')}}" class="float-right text-light">Mark all as read</a>
                 </div>
                 </li>
+                @if (filled(Auth::User()?->unreadNotifications))
                 @foreach (Auth::User()->unreadNotifications as $notification)
 
 
@@ -68,6 +69,7 @@
                 </div>
                 </li>
                 @endforeach
+                @endif
 
                 <li class="footer bg-dark text-center">
                 <a href="" class="text-light">View All</a>
