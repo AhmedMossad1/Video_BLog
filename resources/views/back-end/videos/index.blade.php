@@ -12,7 +12,7 @@
     @component('back-end.layout.header')
         @slot('nav_title')
         {{$pageTitle}}
-        @endslot    
+        @endslot
     @endcomponent
 
 <div class="row">
@@ -23,13 +23,14 @@
             <div class="col-md-8">
                 <h4 class="card-title ">{{$pageTitle}}</h4>
                 <p class="card-category"> {{$pageDes}}</p>
-            </div> 
+                @include('back-end.shared.search')
+            </div>
             <div class="col-md-4 text-right">
                 <a href="{{ route($routeName.'.create') }}" class="btn btn-white btn-round">
                     Add {{ $sModuleName }}
                 </a>
-            </div>    
-        </div>    
+            </div>
+        </div>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -57,23 +58,23 @@
                 <tbody>
                 @foreach ($rows as $row)
                 <tr>
-                    <td> 
+                    <td>
                         {{$row->id}}
                     </td>
-                    <td> 
+                    <td>
                         {{$row->name}}
                     </td>
-                    <td> 
+                    <td>
                         @if($row->published == 1)
                                 published
                             @else
                                 hidden
                             @endif
                     </td>
-                    <td> 
+                    <td>
                         {{$row->cat->name}}
                     </td>
-                    <td> 
+                    <td>
                         {{$row->user->name}}
                     </td>
                     <td class="td-actions text-right">
@@ -81,7 +82,7 @@
                         @include('back-end.shared.buttons.delete')
                     </td>
                 </tr>
-                    
+
                 @endforeach
                 </tbody>
             </table>
@@ -90,6 +91,6 @@
         </div>
         </div>
     </div>
-    
+
     </div>
 @endsection

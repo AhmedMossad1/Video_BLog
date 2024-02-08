@@ -23,6 +23,7 @@
             <div class="col-md-8">
                 <h4 class="card-title ">{{$pageTitle}}</h4>
                 <p class="card-category"> {{$pageDes}}</p>
+                @include('back-end.shared.search')
             </div>
 
         </div>

@@ -1,9 +1,9 @@
 <?php
 namespace App\Http\Controllers\BackEnd;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+
 class BackEndController extends Controller
 {
     protected $model;
@@ -19,6 +19,9 @@ class BackEndController extends Controller
         if(!empty($with)){
             $rows=$rows->with($with);
         }
+        if(request()->has('search') && request()->get('search') != ''){
+            $rows = $rows->where('name' , 'like' , "%".request()->get('search')."%");
+        }
         $rows = $rows->paginate(10);
         $moduleName = $this->pluralModelName();
         $pageDes = "Here you can add / edit / delete " .$moduleName;
@@ -32,8 +35,6 @@ class BackEndController extends Controller
             'pageTitle',
             'sModuleName',
             'routeName'
-
-
         ));
     }
     public function create(){
