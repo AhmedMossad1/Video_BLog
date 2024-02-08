@@ -2,7 +2,7 @@
 <div class="container">
     <div class="navbar-translate">
         <a class="navbar-brand" href="{{ route('frontend.landing') }}" rel="tooltip"
-            title="Coded by Creative Tim" data-placement="bottom" >
+            title="Home" data-placement="bottom" >
             B L O G
         </a>
         <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
@@ -99,6 +99,13 @@
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
+
+                        @if (Auth::user()->group == 'admin')
+                        <a class="dropdown-item"
+                        href="{{ url('/admin/home') }}" class="nav-link">Dashboard</a>
+                        @endif
+
+
                     </div>
                 </li>
             @endguest

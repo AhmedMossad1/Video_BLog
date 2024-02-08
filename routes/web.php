@@ -1,5 +1,4 @@
 <?php
-
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BackEnd\BackEndController;
@@ -38,8 +37,6 @@ Route::group(
         Route::get('comments/{id}', 'Videos@commentDelete')->name('comment.delete');
         Route::post('comments/{id}', 'Videos@commentUpdate')->name('comment.update');
 });
-
-
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 Route::get('/', 'App\Http\Controllers\HomeController@welcome')->name('frontend.landing');
 Route::get('page/{id}/{slug?}', 'App\Http\Controllers\HomeController@page')->name('front.page');
@@ -49,7 +46,6 @@ Route::get('tag/{id}', 'App\Http\Controllers\HomeController@tags')->name('front.
 Route::get('video/{id}', 'App\Http\Controllers\HomeController@video')->name('front.video');
 Route::get('contact-us', 'App\Http\Controllers\HomeController@messageStore')->name('contact.store');
 Route::get('Notification/Read', 'App\Http\Controllers\HomeController@markAsRead')->name('Notification.Read');
-
 Route::get('profile/{id}/{slug?}', 'App\Http\Controllers\HomeController@profile')->name('front.profile');
 Route::middleware('auth')->group(function () {
     Route::post('comments/{id}', 'App\Http\Controllers\HomeController@commentUpdate')->name('front.commentUpdate');
@@ -57,9 +53,9 @@ Route::middleware('auth')->group(function () {
     Route::post('profile', 'App\Http\Controllers\HomeController@profileUpdate')->name('profile.update');
 });
 
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->middleware(['auth', 'verified'])->name('dashboard');
+    // Route::get('/dashboard', function () {
+    //     return view('dashboard');
+    // })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
