@@ -1,8 +1,8 @@
 <?php
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BackEnd\BackEndController;
-use App\Http\Controllers\BackEnd\Home;
+use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\Home;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,7 +20,7 @@ use App\Http\Controllers\BackEnd\Home;
 
 Route::group(
     [
-        'namespace' => 'App\Http\Controllers\BackEnd',
+        'namespace' => 'App\Http\Controllers\Dashboard',
         'prefix' => 'admin',
         'middleware' => 'admin'
     ], function () {
