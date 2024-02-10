@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -26,7 +25,6 @@ class UserAuthController extends Controller
         if($user->save()){
             $tokenResult = $user->createToken('Personal Access Token');
             $token = $tokenResult->plainTextToken;
-
             return response()->json([
             'message' => 'Successfully created user!',
             'accessToken'=> $token,
@@ -46,22 +44,19 @@ class UserAuthController extends Controller
                 'message' => 'Unauthorized'
             ],401);
             }
-
             $user = $request->user();
             $tokenResult = $user->createToken('Personal Access Token');
             $token = $tokenResult->plainTextToken;
-
             return response()->json([
             'accessToken' =>$token,
             'token_type' => 'Bearer',
             ]);
     }
-
     public function logout(Request $request){
-    $request->user()->tokens()->delete();
-    return response()->json([
-    'message' => 'Successfully logged out'
-    ]);
+        $request->user()->tokens()->delete();
+        return response()->json([
+        'message' => 'Successfully logged out'
+        ]);
 
 }
 }

@@ -1,21 +1,15 @@
 <?php
-//app/Http/Controllers/Api/UserController.php
-
 namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
-
-
-
 class UserController extends Controller
 {
     public function index(){
         $users = User::all();
         return UserResource::collection($users);
     }
-
     public function show($id){
         $user = User::find($id);
         if (!$user) {
@@ -23,9 +17,7 @@ class UserController extends Controller
         }
         return new UserResource($user);
     }
-
     public function update(Request $request, $id){
-
         $user = User::find($id);
         if (!$user) {
             return response()->json(['message' => 'User not found'], 404);
