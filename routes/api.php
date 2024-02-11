@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\VideoController;
+use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\UserAuthController;
 use App\Http\Controllers\Api\UserController;
 /*
@@ -24,6 +25,12 @@ Route::get('/video/{id}',[VideoController::class,'show']);
 Route::post('/video',[VideoController::class,'store']);
 Route::post('/video/{id}',[VideoController::class,'update']);
 Route::post('/videos/{id}',[VideoController::class,'destory']);
+
+Route::get('/category',[CategoryController::class,'index']);
+Route::get('/category/{id}',[CategoryController::class,'show']);
+Route::post('/category',[CategoryController::class,'store']);
+Route::post('/category/{id}',[CategoryController::class,'update']);
+Route::post('/category/{id}',[CategoryController::class,'destory']);
 
 Route::post('register',[UserAuthController::class,'register']);
 Route::post('login',[UserAuthController::class,'login']);
