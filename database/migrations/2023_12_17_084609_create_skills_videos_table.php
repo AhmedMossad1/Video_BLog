@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('skills_videos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('skill_id');
-            $table->integer('video_id');
+            $table->foreignId('skill_id')->references('id')->on('skills')->onDelete('cascade');
+            $table->foreignId('video_id')->references('id')->on('videos')->onDelete('cascade');
             $table->timestamps();
         });
     }

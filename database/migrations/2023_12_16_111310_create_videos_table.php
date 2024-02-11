@@ -19,8 +19,8 @@ return new class extends Migration
             $table->text('des');
             $table->string('youtube');
             $table->boolean('published')->default(1);
-            $table->integer('user_id');
-            $table->integer('cat_id');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('cat_id')->references('id')->on('categories')->onDelete('cascade');
             $table->string('image');
             $table->timestamps();
         });

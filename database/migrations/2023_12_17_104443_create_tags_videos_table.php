@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('tags_videos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('tag_id');
-            $table->integer('video_id');
+            $table->foreignId('tag_id')->references('id')->on('tags')->onDelete('cascade');
+            $table->foreignId('video_id')->references('id')->on('videos')->onDelete('cascade');
             $table->timestamps();
         });
     }

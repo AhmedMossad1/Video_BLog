@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 use App\Http\Requests\FrontEnd\Comments\Store;
 use App\Http\Requests\FrontEnd\Messages\Store as MessagesStore;
@@ -17,7 +16,6 @@ use App\Http\Requests\FrontEnd\Users\Store as UsersStore;
 use Illuminate\Support\Facades\DB;
 use App\Notifications\AddComments;
 use Illuminate\Support\Facades\Notification;
-
 class HomeController extends Controller
 {
     public function __construct(){

@@ -12,6 +12,7 @@ class VideoResource extends JsonResource
             'meta_descritption' =>$this->meta_des,
             'user_id' =>$this->user_id,
             'name'=>$this->name,
+            'user_name'=>$this->User->name,
         ];
     }
 }
