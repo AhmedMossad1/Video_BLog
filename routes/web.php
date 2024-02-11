@@ -1,19 +1,7 @@
 <?php
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Dashboard\DashboardController;
-use App\Http\Controllers\Dashboard\Home;
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|skills
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
+use App\Http\Controllers\Dashboard\HomeController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
@@ -24,18 +12,18 @@ Route::group(
         'prefix' => 'admin',
         'middleware' => 'admin'
     ], function () {
-        Route::get('home',[Home::class,'index']);
-        Route::resource('users','Users')->except('show','delete');
-        Route::resource('categories', 'Categories')->except(['show']);
-        Route::resource('skills', 'Skills')->except(['show']);
-        Route::resource('tags', 'Tags')->except(['show']);
-        Route::resource('pages', 'Pages')->except(['show']);
-        Route::resource('videos', 'Videos')->except(['show']);
-        Route::resource('messages', 'Messages')->only(['index' , 'destroy' , 'edit']);
-        Route::post('messages/replay/{id}', 'Messages@replay')->name('message.replay');
-        Route::post('comments', 'Videos@commentStore')->name('comment.store');
-        Route::get('comments/{id}', 'Videos@commentDelete')->name('comment.delete');
-        Route::post('comments/{id}', 'Videos@commentUpdate')->name('comment.update');
+        Route::get('home',[HomeController::class,'index']);
+        Route::resource('users','UsersController')->except('show','delete');
+        Route::resource('categories', 'CategoriesController')->except(['show']);
+        Route::resource('skills', 'SkillsController')->except(['show']);
+        Route::resource('tags', 'TagsController')->except(['show']);
+        Route::resource('pages', 'PagesController')->except(['show']);
+        Route::resource('videos', 'VideosController')->except(['show']);
+        Route::resource('messages', 'MessagesController')->only(['index' , 'destroy' , 'edit']);
+        Route::post('messages/replay/{id}', 'MessagesController@replay')->name('message.replay');
+        Route::post('comments', 'VideosController@commentStore')->name('comment.store');
+        Route::get('comments/{id}', 'VideosController@commentDelete')->name('comment.delete');
+        Route::post('comments/{id}', 'VideosController@commentUpdate')->name('comment.update');
 });
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 Route::get('/', 'App\Http\Controllers\HomeController@welcome')->name('frontend.landing');
