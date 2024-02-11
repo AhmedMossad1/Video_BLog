@@ -61,8 +61,12 @@ class HomeController extends Controller
         $comment = Comments::findOrFail($id);
         if(($comment->user_id == auth()->user()->id) || auth()->user()->group == 'admin'){
             $comment->update(['comment' => $request->comment]);
+            //alert()->success('Your Comment Has Been Updated' , 'Done');
         }
+        //alert()->error('we did not found this comment' , 'Done');
+        return redirect()->route('front.video' , ['id' => $comment->video_id , '#commnets']);
     }
+
     public function commentStore($id , Store $request){
         $video = Video::published()->findOrFail($id);
         $row = Comments::create([
