@@ -8,6 +8,7 @@ use App\Models\Tag;
 use App\Models\User;
 use App\Models\Video;
 use App\Notifications\AddVideo;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 class VideosController extends DashboardController
@@ -38,17 +39,25 @@ class VideosController extends DashboardController
         }
         return $array;
     }
-    public function store(Store $request){
+    public function store(Store $request)
+    {
         $fileName = $this->uploadImage($request);
-        $requestarray =$request->all();
-        $requestarray =  ['user_id' => auth()->user()->id , 'image' => $fileName] + $requestarray;
-        $row= $this->model::create($requestarray);
-        $this->syncTagsSkills($row , $requestarray);
-        $users = User::where('id','!=',auth()->user()->id)->get();
-        $user_create = auth()->user()->name;
-        Notification::send($users,new AddVideo($row->id,$user_create,$row->name));
+        // Create the model instance without 'skills' and 'tags'
+        $requestArray = $request->all();
+        $videoData = [
+            'user_id' => auth()->user()->id,
+            'image' => $fileName,
+       ] + Arr::except($requestArray, ['skills', 'tags']);
+        $row = $this->model::create($videoData);
+        // Attach skills and tags to the created model
+        $this->syncTagsSkills($row, $requestArray);
+        // Notify users about the new video
+        $users = User::where('id', '!=', auth()->user()->id)->get();
+        $userCreate = auth()->user()->name;
+        Notification::send($users, new AddVideo($row->id, $userCreate, $row->name));
         return redirect()->route('videos.index');
     }
+
     public function update($id,Update $request){
         $requestarray = $request->all();
         if($request->hasFile('image')){
@@ -56,17 +65,23 @@ class VideosController extends DashboardController
             $requestarray = ['image' => $fileName] + $requestarray;
         }
         $row= $this->model->findOrFail($id);
+       // dd($row,$this->model);
         $this->syncTagsSkills($row , $requestarray);
         return redirect()->route('videos.index');
     }
-    protected function syncTagsSkills($row , $requestarray){
-        if (isset($requestarray['skills']) && !empty($requestarray['skills'])) {
-            $row->skills()->sync($requestarray['skills']);
-        }
-        if (isset($requestarray['tags']) && !empty($requestarray['tags'])) {
-            $row->tags()->sync($requestarray['tags']);
-        }
+    protected function syncTagsSkills($row, $requestArray)
+        {
+    // Check if 'skills' key is set in $requestArray and is not empty
+    if (isset($requestArray['skills']) && !empty($requestArray['skills'])) {
+        // Attach skills to the created video using the pivot table
+        $row->skills()->attach($requestArray['skills']);
     }
+    // Check if 'tags' key is set in $requestArray and is not empty
+    if (isset($requestArray['tags']) && !empty($requestArray['tags'])) {
+        // Attach tags to the created video using the pivot table
+        $row->tags()->attach($requestArray['tags']);
+    }
+}
     protected function uploadImage($request){
         $file = $request->file('image');
 
